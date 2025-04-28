@@ -266,78 +266,65 @@
   set par(justify: false)
 
   // Titre 1
-  show heading.where(level: 1): it => [
-    #set par(justify: false)
-    #set par(leading: 0.25em)
-    #block(
-      below: 1em,
-      stack(
-        spacing: 0.3cm,
-        text(
-          hyphenate: false,
-          size: 32pt,
-          font: heading-fonts,
-          weight: "bold",
-          upper(it.body),
-        ),
-        rect(
-          width: 30%,
-          height: 10pt,
-          fill: rgb(theme-color),
-        ),
+  show heading.where(level: 1): it => {
+    let body = text(
+      size: 32pt,
+      font: heading-fonts,
+      weight: "bold",
+      upper(it.body)
+    )
+    let size = measure(body)
+    let factor = 0.35
+
+    stack(
+      spacing: size.height * factor * factor,
+      body,
+      rect(
+        width: size.width - size.width * factor * factor,
+        height: size.height * factor,
+        fill: rgb(theme-color),
       ),
     )
-
-  ]
+  }
 
   // Titre 2
-  show heading.where(level: 2): it => [
-    #set par(leading: 0.5em)
-    #block(
-      below: 1.7em,
-      text(
-        size: 24pt,
-        font: normal-fonts,
-        weight: "bold",
-        underline(
-          evade: false,
-          background: true,
-          stroke: 6pt + rgb(theme-color),
-          it.body,
-        ),
+  show heading.where(level: 2): it => {
+    let body = text(
+      size: 24pt,
+      font: heading-fonts,
+      weight: "bold",
+      it.body
+    )
+    let size = measure(body)
+    let factor = 0.35
+
+    stack(
+      spacing: size.height * factor * factor,
+      body,
+      rect(
+        width: size.width - size.width * factor * factor,
+        height: size.height * factor,
+        fill: rgb(theme-color),
       ),
     )
+  }
 
-  ]
 
   // Titre 3
-  show heading.where(level: 3): it => [
-    #block(
-      below: 1em,
-      text(
-        size: 16pt,
-        font: normal-fonts,
-        weight: "bold",
-        upper(it.body),
-      ),
-    )
-
-  ]
+  show heading.where(level: 3): set text(
+    size: 18pt, 
+    font: normal-fonts, 
+    weight: "bold"
+  )
+  show heading.where(level: 3): smallcaps
 
   // Titre 4
-  show heading.where(level: 4): it => [
-    #block(
-      below: 1.3em,
-      text(
-        size: 12pt,
-        font: normal-fonts,
-        fill: rgb(theme-color),
-        weight: "medium",
-        it.body,
-      ),
-    )
-
-  ]
+  show heading.where(level: 4): set text(
+    size: 12pt,
+    font: normal-fonts,
+    weight: "bold",
+    fill: rgb(theme-color),
+  )
 
   // Margin des pages pour écrire
   set page(
