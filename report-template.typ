@@ -424,34 +424,26 @@
   }
 
   // Custom caption pour les images uniquement
-  show figure.where(kind: image): it => {
-    let size = if it.body.has("width") {
-      it.body.width
-    } else {
-      auto
-    }
+  show figure.where(kind: image): it => layout(sz => {
+    let size = measure(it.body, width: sz.width).width
+    set text(fill: white)
+
     align(
       center,
-      block(
-        breakable: false,
-        stack(
-          it.body,
-          rect(
-            fill: rgb(theme-color),
-            width: size,
-            text(
-              fill: white,
-              it.caption.supplement.text
-                + " "
-                + it.caption.counter.display()
-                + " - "
-                + it.caption.body,
-            ),
-          ),
+      stack(
+        it.body,
+        rect(
+          fill: rgb(theme-color),
+          width: size,
+          it.caption.supplement.text
+          + " "
+          + it.caption.counter.display()
+          + " - "
+          + it.caption.body,
         ),
       ),
     )
-  }
+  })
 
   show table: set align(left)
 
@@ -597,8 +589,10 @@
 #let codeblock(filename: "", line_number: true, content) = {
   set text(fill: white)
 
+  let term = ((content.lang == "bash" or content.lang == "term") and filename == "")
+
   show raw.line: line => {
-    if line_number {
+    if (line_number and not term) {
       text(fill: rgb("ffffff55"))[#line.number]
       h(2em)
     }
@@ -616,7 +610,7 @@
       stack(
         spacing: 0.7em,
         // Désactive la barre pour afficher l'output d'un terminal
-        if (content.lang != "bash" or filename != "") { 
+        if not (term) { 
           [#text(font: "DejaVu Sans Mono", size: 9pt, filename) #h(1fr) #text(
             font: "DejaVu Sans Mono",
             size: 9pt,
