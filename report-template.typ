@@ -428,19 +428,16 @@
     let size = measure(it.body, width: sz.width).width
     set text(fill: white)
 
-    align(
-      center,
-      stack(
-        it.body,
-        rect(
-          fill: rgb(theme-color),
-          width: size,
-          it.caption.supplement.text
-          + " "
-          + it.caption.counter.display()
-          + " - "
-          + it.caption.body,
-        ),
+    stack(
+      it.body,
+      rect(
+        fill: rgb(theme-color),
+        width: size,
+        it.caption.supplement.text
+        + " "
+        + it.caption.counter.display()
+        + " - "
+        + it.caption.body,
       ),
     )
   })
