@@ -1,16 +1,19 @@
-#import "../report-template.typ" : *
+#import "../vibrant-color.typ" : *
 
-#show: doc => insa-report(
-  theme: "green-theme",  // choix du theme parmi pastel-theme, blue-theme, green-theme, red-theme
+#show: doc => vibrant-color(
+  theme: "blue-theme",  // choix du theme parmi pastel-theme, blue-theme, green-theme, red-theme
   title: "Thème custom typst",  // titre du document
   authors: (  // liste des auteurs
     "SHAfoin Shafoin",
   ),
+  lang: "fr",
+  heading-numbering: true,
   sub-authors: "4A ICY",  // texte optionnel au dessus des auteurs ex : groupe 2, 4A ICY 
   description: "Présentation du thème custom typst", // description du document
   date: datetime(day: 10, month: 3, year: 2025), // date du document, sous format datetime
-  matiere: "Matière", // matière du document ou texte en bas
-  bib-yaml: "./exemple/refs.yaml",  // référence vers une bibliographie
+  subject: "Matière", // matière du document ou texte en bas
+  bib-yaml: bibliography("refs.yaml"),  // référence vers une bibliographie
+  logo: image("insa-hdf.png", width: 33%),
   doc
 )
 
@@ -21,6 +24,8 @@
 === Titre 3
 
 ==== Titre 4
+
+Les titres sont numérotés automatiquement si l'on utilise le `heading-numbering: true`.
     
 *Texte stylisé* :
 On peut #strike[barrer du texte], mettre du texte en *gras*, en _italique_, ou *_les deux_*. Le texte en inférieur#sub[aussi], et en supérieur aussi pour les 1#super[er] par exemple. Enfin on peut #underline[souligner], mettre une ligne #overline[au dessus], et #highlight[surligner] (selon la couleur du thème).
@@ -66,6 +71,8 @@ On peut #strike[barrer du texte], mettre du texte en *gras*, en _italique_, ou *
   ),
 )
 
+#pagebreak()
+
 #columns(2,[
   #figure(
     caption: [Une image d'un gros lapin. La caption des images est différente, avec une barre colorée selon le thème en arrière-plan.], 
@@ -98,6 +105,7 @@ On peut #strike[barrer du texte], mettre du texte en *gras*, en _italique_, ou *
 *Délimiteur* : 
 
 #line(length: 100%)
+#line(length: 100%, stroke: (dash: "dashed"))
 
 *Référence bibliographique* : Il suffit de fournir un fichier bibliographique YAML (voir exemple). Il permet de stocker nos références bibliographiques et de les citer dans le texte. Il faut préciser le nom du fichier dans l'attribut "bib-yaml" de la fonction insa-report. Une section "BIBLIOGRAPHIE" apparait alors automatiquement à la fin de notre rapport. On cite un document de la bibliographie de la même manière que les références. Exemple : @harry
 
@@ -108,8 +116,9 @@ On peut #strike[barrer du texte], mettre du texte en *gras*, en _italique_, ou *
 
 *Code inline* : Possibilité de taper du code inline comme `test` et même de lui mettre la syntaxe de son langage avec ```rust fn main()```.
 
-*Block de code* : Possibilité de mettre un block de code avec la syntaxe de son langage. On peut préciser un nom de fichier aussi.
-#codeblock(filename: "Main.java", line_number: true,
+*Block de code* : Possibilité de mettre un block de code avec la syntaxe de son langage. On peut préciser un nom de fichier et si l'on souhaite afficher les numéros de ligne ou non.
+
+#codeblock(filename: "Main.java", line-number: true,
 ```java
 public class Main {
   public static void main(String[] args) {
@@ -125,5 +134,3 @@ public class Main {
 #info("L'info, pour donner des informations supplémentaires ou des précisions.")
 
 #comment("Le commentaire, pour mettre des annotations, remarques ou des exemples.")
-
-test
